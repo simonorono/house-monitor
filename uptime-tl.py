@@ -1,4 +1,6 @@
+import json
 import os
+from http.client import HTTPSConnection
 
 
 def read_config() -> dict[str, str]:
@@ -43,5 +45,24 @@ def get_duration_message(seconds: int) -> str:
     return ' '.join([f'{p[0]} {p[1]}' for p in parts])
 
 
+def send_message(message: str):
+    config = read_config()
+
+    path = f"/bot{config['TELEGRAM_TOKEN']}/sendMessage"
+
+    conn = HTTPSConnection("api.telegram.org")
+
+    body = {
+        'chat_id': config['TELEGRAM_CHANNEL'],
+        'text': f"I've been on for *{message}*\\.",
+        'parse_mode': 'MarkdownV2',
+    }
+
+    headers = {'content-type': 'application/json'}
+
+    conn.request('POST', path, json.dumps(body), headers)
+    conn.close()
+
+
 if __name__ == '__main__':
-    print(get_duration_message(get_uptime()))
+    send_message(get_duration_message(get_uptime()))
