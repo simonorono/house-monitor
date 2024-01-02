@@ -61,6 +61,7 @@ def send_message(message: str):
     headers = {'content-type': 'application/json'}
 
     conn.request('POST', path, json.dumps(body), headers)
+    conn.getresponse()
     conn.close()
 
 
