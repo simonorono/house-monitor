@@ -1,3 +1,18 @@
+import os
+
+
+def read_config() -> dict[str, str]:
+    path = os.path.join(os.environ['HOME'], '.config', 'house-monitor.conf')
+    config = {}
+
+    with open(path, 'r') as file:
+        for line in file.readlines():
+            key, value = line.split('=')
+            config[key.strip()] = value.strip()
+
+    return config
+
+
 def get_uptime() -> int:
     with open('/proc/uptime', 'r') as file:
         content = file.read()
