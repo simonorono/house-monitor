@@ -21,11 +21,11 @@ fn read_config() -> HashMap<String, String> {
 
     config_file.lines().for_each(|line| {
         let parts = line
-            .split("=")
+            .split('=')
             .map(|s| s.to_string())
             .collect::<Vec<String>>();
 
-        config.insert(format!("{}", parts[0]), format!("{}", parts[1]));
+        config.insert(parts[0].to_string(), parts[1].to_string());
     });
 
     config
