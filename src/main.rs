@@ -4,8 +4,13 @@ use std::{env, fs};
 
 const ERROR_CONFIG_FILE_UNREADABLE: &str = "couldn't read config file";
 const ERROR_HOME_VARIABLE_NOT_SET: &str = "couldn't find home env variable";
+const ERROR_REQUEST_FAILED: &str = "request to Telegram failed";
 const ERROR_UNABLE_TO_READ_FILE: &str = "couldn't read uptime file";
 const ERROR_UPTIME_NOT_FLOAT: &str = "uptime value is not decimal";
+
+fn get_telegram_endpoint(token: String) -> String {
+    format!("https://api.telegram.org/bot{}/sendMessage", token)
+}
 
 fn read_config() -> HashMap<String, String> {
     let home = env::var("HOME").expect(ERROR_HOME_VARIABLE_NOT_SET);
@@ -61,9 +66,20 @@ fn get_duration_message(seconds: u64) -> String {
 
 fn send_message(message: String) {
     let config = read_config();
+    let token = config["TELEGRAM_TOKEN"].clone();
+    let channel = config["TELEGRAM_CHANNEL"].clone();
+    let endpoint = get_telegram_endpoint(token);
 
-    println!("{:?}", config);
-    println!("{}", message);
+    ureq::post(endpoint.as_str())
+        .send_form(&[
+            ("chat_id", channel.as_str()),
+            (
+                "text",
+                format!("I've been on for *{}*\\.", message).as_str(),
+            ),
+            ("parse_mode", "MarkdownV2"),
+        ])
+        .expect(ERROR_REQUEST_FAILED);
 }
 
 fn main() {
