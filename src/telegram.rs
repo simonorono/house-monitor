@@ -38,10 +38,7 @@ pub fn send_message(message: String) {
     ureq::post(endpoint.as_str())
         .send_form(&[
             ("chat_id", channel.as_str()),
-            (
-                "text",
-                format!("I've been on for *{}*\\.", message).as_str(),
-            ),
+            ("text", message.as_str()),
             ("parse_mode", "MarkdownV2"),
         ])
         .expect(ERROR_REQUEST_FAILED);
