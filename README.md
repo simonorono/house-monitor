@@ -3,13 +3,14 @@ House Monitor
 
 Utility to post uptime of any Linux system to a Telegram channel.
 
-Tested on Python 3.11.6
+Tested with Rust 1.76.0 (rustup) running on Linux.
 
 ## Configuration
 
-Config file must be placed in `$HOME/.config/house-monitor.conf`. This file only
-needs two values:
+Config file must be placed in `$HOME/.config/house-monitor.conf`. This file
+needs the following values:
 
+* `DEVICE_NAME`: appears on the message sent
 * `TELEGRAM_TOKEN`: the authentication token for a Telegram bot.
 * `TELEGRAM_CHANNEL`: the channel id for the channel the message will be posted to.
 

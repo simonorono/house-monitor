@@ -36,6 +36,10 @@ fn main() {
     send_message(
         config["TELEGRAM_TOKEN"].to_string(),
         config["TELEGRAM_CHANNEL"].to_string(),
-        format!("I've been on for *{}*\\.", get_duration_message()),
+        format!(
+            "*\\[{}\\]* Uptime: *{}*\\.",
+            config["DEVICE_NAME"],
+            get_duration_message(),
+        ),
     );
 }
