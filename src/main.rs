@@ -2,6 +2,8 @@ use std::collections::HashMap;
 use std::path::Path;
 use std::{env, fs};
 
+use clap::{Parser, Subcommand};
+
 use telegram::send_message;
 use uptime::get_duration_message;
 
@@ -37,16 +39,42 @@ fn read_config() -> HashMap<String, String> {
     config
 }
 
-fn main() {
-    let config = read_config();
+#[derive(Subcommand)]
+enum Commands {
+    Uptime,
+    Version,
+}
 
-    send_message(
-        config["TELEGRAM_TOKEN"].to_string(),
-        config["TELEGRAM_CHANNEL"].to_string(),
-        format!(
-            "*\\[{}\\]* Uptime: *{}*\\.",
-            config["DEVICE_NAME"],
-            get_duration_message(),
-        ),
-    );
+#[derive(Parser)]
+struct Cli {
+    #[command(subcommand)]
+    command: Option<Commands>,
+}
+
+impl Cli {
+    fn send_message(&self, message: String) {
+        let config = read_config();
+
+        send_message(
+            config["TELEGRAM_TOKEN"].to_string(),
+            config["TELEGRAM_CHANNEL"].to_string(),
+            format!("*\\[{}\\]* {}", config["DEVICE_NAME"], message),
+        );
+    }
+
+    fn run(&self) {
+        match self.command {
+            Some(Commands::Uptime) => {
+                self.send_message(format!("Uptime: {}", get_duration_message()))
+            }
+            Some(Commands::Version) => {
+                self.send_message(format!("Version: {}", env!("CARGO_PKG_VERSION")))
+            }
+            None => println!("nothing to do"),
+        }
+    }
+}
+
+fn main() {
+    Cli::parse().run()
 }
