@@ -1,13 +1,19 @@
+use reqwest::blocking::Client;
+use std::collections::HashMap;
+
 const ERROR_REQUEST_FAILED: &str = "request to Telegram failed";
 
 pub fn send_message(token: String, channel: String, message: String) {
     let endpoint = format!("https://api.telegram.org/bot{}/sendMessage", token);
 
-    ureq::post(endpoint.as_str())
-        .send_form(&[
-            ("chat_id", channel.as_str()),
-            ("text", message.as_str()),
-            ("parse_mode", "MarkdownV2"),
-        ])
+    let mut request = HashMap::new();
+    request.insert("chat_id", channel);
+    request.insert("text", message);
+    request.insert("parse_mode", "MarkdownV2".to_string());
+
+    Client::new()
+        .post(endpoint)
+        .json(&request)
+        .send()
         .expect(ERROR_REQUEST_FAILED);
 }
