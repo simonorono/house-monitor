@@ -8,7 +8,7 @@ pub fn send_message(token: String, channel: String, message: String) {
 
     let mut request = HashMap::new();
     request.insert("chat_id", channel);
-    request.insert("text", message);
+    request.insert("text", message.replace('.', "\\."));
     request.insert("parse_mode", "MarkdownV2".to_string());
 
     Client::new()
