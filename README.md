@@ -3,7 +3,7 @@ House Monitor
 
 Utility to post uptime of any Linux system to a Telegram channel.
 
-Tested with Go 1.22.0 running on Linux.
+Tested with Rust 1.77.2 running on Linux.
 
 ## Configuration
 
