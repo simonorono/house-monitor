@@ -4,15 +4,15 @@ use std::{env, fs};
 
 use clap::{Parser, Subcommand};
 
-use telegram::send_message;
+use discord::send_message;
 use uptime::get_duration_message;
 
-mod telegram;
+mod discord;
 mod uptime;
 
 const ERROR_CONFIG_FILE_UNREADABLE: &str = "couldn't read config file";
 const ERROR_HOME_VARIABLE_NOT_SET: &str = "couldn't find home env variable";
-const REQUIRED_CONFIG_VALUES: [&str; 3] = ["DEVICE_NAME", "TELEGRAM_CHANNEL", "TELEGRAM_TOKEN"];
+const REQUIRED_CONFIG_VALUES: [&str; 2] = ["DEVICE_NAME", "DISCORD_WEBHOOK"];
 
 fn read_config() -> HashMap<String, String> {
     let home = env::var("HOME").expect(ERROR_HOME_VARIABLE_NOT_SET);
@@ -56,8 +56,7 @@ impl Cli {
         let config = read_config();
 
         send_message(
-            config["TELEGRAM_TOKEN"].to_string(),
-            config["TELEGRAM_CHANNEL"].to_string(),
+            config["DISCORD_WEBHOOK"].to_string(),
             format!("*\\[{}\\]* {}", config["DEVICE_NAME"], message),
         );
     }
