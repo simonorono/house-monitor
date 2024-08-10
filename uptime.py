@@ -3,6 +3,7 @@
 import json
 import os
 import sys
+import time
 from http.client import HTTPSConnection
 from urllib.parse import urlparse
 
@@ -60,9 +61,13 @@ def send_message(webhook, message):
 
 
 def main():
+    timestamp = int(time.time())
     config = read_config()
-    message = f'**[{config['DEVICE_NAME']}]** Uptime: {get_message()}'
-    send_message(config['DISCORD_WEBHOOK'], message)
+
+    send_message(
+        config['DISCORD_WEBHOOK'],
+        f'**[<t:{timestamp}>][{config['DEVICE_NAME']}]** Uptime: {get_message()}'
+    )
 
 
 if __name__ == '__main__':
