@@ -3,7 +3,7 @@ House Monitor
 
 Utility to post uptime of any Linux system to a Discord channel via webhooks.
 
-Tested with Rust 1.77.2 running on Linux.
+Tested with Python 3.12.4 running on Linux.
 
 ## Configuration
 
