@@ -57,7 +57,7 @@ impl Cli {
 
         send_message(
             config["DISCORD_WEBHOOK"].to_string(),
-            format!("*\\[{}\\]* {}", config["DEVICE_NAME"], message),
+            format!("**[{}]** {}", config["DEVICE_NAME"], message),
         );
     }
 
