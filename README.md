@@ -11,7 +11,7 @@ Config file must be placed in `$HOME/.config/house-monitor.conf`. This file
 needs the following values:
 
 * `DEVICE_NAME`: appears on the message sent
-* `DISCORD_WEBHOOK`: the authentication token for a Telegram bot.
+* `DISCORD_WEBHOOK`: specific to the channel we want to send the messages to
 
 This file must be in .env format.
 
