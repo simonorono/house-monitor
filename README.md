@@ -3,11 +3,11 @@ House Monitor
 
 Utility to post uptime of any Linux system to a Discord channel via webhooks.
 
-Tested with Python 3.12.4 running on Linux.
+Tested with Go 1.23.0 running on Linux.
 
 ## Configuration
 
-Config file must be placed in `$HOME/.config/house-monitor.conf`. This file
+Config file must be placed in `$HOME/.config/house-monitor.json`. This file
 needs the following values:
 
 * `DEVICE_NAME`: appears on the message sent
