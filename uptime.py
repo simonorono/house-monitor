@@ -61,7 +61,7 @@ def send_message(webhook, message):
 
 
 def main():
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M')
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     config = read_config()
 
     send_message(
